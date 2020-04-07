@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>getEmpList.</title>
+</head>
+<body>
+	<h1>Ajax</h1>
+	<div id="show"></div>
+ 	<table id = "tbl">
+		<tr>
+		<th>empId</th>
+		<th>first_name</th>
+		<th>last_name</th>
+		<th>email</th>
+		<th>salary</th>
+		</tr>
+	</table>
+	<script>
+		var xhtp = new XMLHttpRequest();
+		xhtp.onreadystatechange = function() {
+			//console.log("readystate: " + xhtp.readyState + ", status: " + xhtp.status);
+			if (xhtp.readyState == 4 && xhtp.status == 200) {
+				var parsedData = JSON.parse(xhtp.responseText); //object 타입으로 나온다.
+				console.log(parsedData);
+				showPage(parsedData);
+				
+				//for 구문하다가 실패
+/* 				var $tag = "<ul>";
+				parsedData.forEach(function(o, i) {
+					$tag += "<li>" + parsedData[o].id + " - "
+							+ parsedData[o].first_name + " - "
+							+ parsedData[o].last_name + "</li></ul>";
+					document.getElementById("show").innerHTML = $tag;
+				}) */
+				
+				
+			}
+		}
+		//xhtp.open("get", "../MOCK_DATA.json"); //WebContent의 request.txt를 찾아감.
+		xhtp.open("get", "../GetEmpListServlet");
+		xhtp.send();
+		
+		function showPage(datas) {
+			var $tr, $td, $text, $table;
+			
+			$table = document.getElementById("tbl");
+			//$table = document.createElement("table");
+			$table.setAttribute("border", 1);
+			$table.setAttribute("style", "border-collapse: collapse;");
+			var $titles = [ "empId", "first_name", "last_name", "email", "salary"];
+			datas.forEach(function (obj) { 
+			/* for(obj of a) { */ 
+				$tr = document.createElement("tr");
+				for (f of $titles) {   //for문 두개 쓸때는 (f in obj)로 쓴다.
+					$text = document.createTextNode(obj[f]);
+	                $td = document.createElement("td");
+	                $td.appendChild($text);
+	                $tr.appendChild($td);
+				} $table.appendChild($tr);
+			});
+		}
+		
+		
+		
+	</script>
+</body>
+</html>

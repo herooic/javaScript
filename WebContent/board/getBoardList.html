@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	#show > table{
+	background-color: orange;
+	}
+</style>
+</head>
+
+<body>
+
+	content:
+	<input type="text" name="" id="content">
+	<br> writer:
+	<input type="text" name="" id="writer">
+	<br>
+	<button onclick="insertBoardFunc()">Click</button>
+	<p id="show"></p>
+
+	<script>
+        var show = document.getElementById("show");
+        var $table, $tr, $td, $text, $th;
+        var xhtp = new XMLHttpRequest();
+        xhtp.onreadystatechange = function () {
+            if (xhtp.readyState == 4 && xhtp.status == 200) {
+                console.log(xhtp.responseText);
+                var datas = JSON.parse(xhtp.responseText);
+                var $titles = ["boardNo", "content", "writer", "date"]
+                
+                $table = document.createElement("table");
+                $table.setAttribute("border", 1)
+                $table.setAttribute("style", "border-collapse: collapse");
+                
+                $tr = document.createElement("tr");
+            	for (f in $titles) {
+           		$th = document.createElement("th");
+            	$text = document.createTextNode($titles[f]);
+            	$th.appendChild($text);
+            	$tr.appendChild($th);
+       			}
+        		 $table.appendChild($tr); 
+        		
+              	 datas.forEach(function (o) {
+                    $tr = document.createElement("tr")
+                    for(f of $titles) {
+                        $text = document.createTextNode(o[f]);
+                        $td = document.createElement("td");
+                    	if(f == "boardNo") {
+                    		var $a = document.createElement("a");
+                    		$a.setAttribute("href", "getBoard.jsp?boardNo=" + o[f]);
+                    		$a.innerHTML = o[f]; //$a.appendChild($text)
+                    		$td.appendChild($a)
+                    	}
+                    	else {               		
+	                        $td.appendChild($text)
+                    	}
+                        $tr.appendChild($td);
+                    }
+                    $table.appendChild($tr);
+                });
+                    show.appendChild($table);
+            }
+        }
+        xhtp.open("get", "../GetBoardListServlet", true);
+        xhtp.send();
+        
+        
+        function insertBoardFunc() {
+        	var content = document.getElementById("content").value;
+            var writer = document.getElementById("writer").value;
+            var xhtp = new XMLHttpRequest();
+            xhtp.onreadystatechange = function() {
+                console.log(xhtp.responseText);
+            }
+            xhtp.open("post", "../InsertBoardServlet", true); //true:비동기, false:동기
+            xhtp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhtp.send("content=" + content + "&writer=" + writer);
+            
+            window.location.reload(true); //click하면 바로 표로 들어감.
+        }
+        
+        
+        
+        
+
+    </script>
+</body>
+
+</html>

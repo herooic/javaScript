@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>domExample.html</title>
+</head>
+<body>
+    <button id="add">Add Row</button>
+    <ul id="parentList">
+        <!-- <li style="display: none">One</li> -->
+        <li>One</li>
+        <li>Two</li>
+        <li>Three</li>
+    </ul>
+    <script>
+        var lis = document.querySelectorAll("ul li") //ul밑의 li이를 모두 가져옴
+        console.log(lis);
+        // for(var i = 0; i < lis.length; i++)
+        lis.forEach(function(a,b,c) {
+            console.log(a);
+            a.addEventListener("mouseover", function() {
+                a.style.backgroundColor = "#f9b904";
+            });
+            a.addEventListener("mouseout", function(){
+                a.style.backgroundColor = "";
+            });
+
+            //기존에 있던거는 숨기고 기존에 있던거에 -1을 붙여서 보이게함.
+            // a.addEventListener("click", function() {
+            //     var text = a.innerHTML; //원래 있던거에 -1을 붙이고 싶어서 만들었음.
+            //     $li = document.createElement('li');
+            //     $text = document.createTextNode(text + "-1");
+            //     $li.appendChild($text);
+            //     a.after($li); //원래 있던거 뒤에 만들어라. one뒤에 one-1이 만들어짐.
+            //     // document.getElementById('parentList').appendChild($li);
+            //     a.style.display = "none"; //클릭하면 숨겨짐 block, inline 주면 다시 살아남.
+            //     //안하면 처음꺼가 안사라짐
+            // });
+            
+            a.addEventListener("click", function() { //a가 li
+                var inputs = document.querySelectorAll("#parentList input");
+                inputs.forEach(function(o) {
+                    o.parentNode.remove(); //li > input: input태그의 li를 삭제
+                });
+                lis.forEach(function(obj) {
+                    if(obj.style.display == "none")
+                    obj.style.display = "";
+                });
+                
+                var text = a.innerHTML;
+                console.log(text);
+                console.log("================")
+                var $li = document.createElement('li');
+                var $input = document.createElement('input');
+                $input.value = text;
+                console.log($input.value);
+                $li.appendChild($input);
+                a.after($li);
+                var btn = document.createElement('button');
+                $input.after(btn);
+                var $text = document.createTextNode("click");
+                btn.appendChild($text);
+                a.style.display = "none";
+
+                btn.addEventListener("click", function() {
+                    // var $li = document.createElement('li');
+                    var $input_text = document.createTextNode($input.value);
+                    $li.appendChild($input_text);
+                    a.after($li); 
+                    btn.style.display = "none";
+                    $input.style.display= "none";  
+                });
+            });
+        });
+
+        var numbers = ["Three", "Four", "Five"];
+        var btn = document.getElementById("add");
+        console.log(btn);
+        btn.innerHTML= "한줄 추가"; // document.getElementById("add").innerHTML = "한줄 추가";
+        var numbersIdx = 0;
+        btn.addEventListener("click", function(e) {
+            //이벤트 발생하게 하려면:addEventListener, 무슨 이벤트:click
+            console.log(e);
+            // e.target.innerHTML: target:button, 버튼의 innerHTML을 가져오니 한줄추가가 나옴
+            var $li = document.createElement("li"); //태그만드는거
+            $li.addEventListener("mouseover", function(a){
+                a.target.style.backgroundColor = "#f9b904";
+            });
+
+            $li.addEventListener("mouseout", function(a) {
+                a.target.style.backgroundColor = "";
+
+            });
+
+            var $text = document.createTextNode(numbers[numbersIdx]); //텍스트노드 만드는거
+            $li.appendChild($text);
+            document.getElementById("parentList").appendChild($li);
+            numbersIdx ++;
+        }); 
+
+
+        // btn.addEventListener과 같음.
+        // btn.onclick = function() {
+        //     console.log("한줄 추가")
+        // }
+    </script>
+
+</body>
+</html>

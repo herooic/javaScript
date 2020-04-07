@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<body>
+	<p id="show"></p>
+	<script>
+        var show = document.getElementById("show");
+        var $table, $tr, $td, $text;
+        var xhtp = new XMLHttpRequest();
+        xhtp.onreadystatechange = function () {
+            if (xhtp.readyState == 4 && xhtp.status == 200) {
+                // console.log(xhtp.responseText);
+                var datas = JSON.parse(xhtp.responseText);
+                var $titles = ["department_id", "department_name", "manager_id", "location_id"];
+                
+                $table = document.createElement("table");
+                $table.setAttribute("border", 1)
+                // $table.setAttribute("style", "border-collapse: collapse");
+        		
+              	 datas.forEach(function (o) {
+                    $tr = document.createElement("tr")
+                    for(f of $titles) {
+                        $text = document.createTextNode(o[f]);
+                        $td = document.createElement("td");
+                        $td.appendChild($text);
+                        $tr.appendChild($td);
+                    }
+                    $table.appendChild($tr);
+                });
+                    show.appendChild($table);
+            }
+        }
+        xhtp.open("get", "../GetDepListServlet", true);
+        xhtp.send();
+        
+        
+        
+        
+
+    </script>
+</body>
+
+</html>

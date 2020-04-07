@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="randomMenu()">Click</button>
+    <script>
+        var menu = ["짜장면", "돈가스", "된장찌개", "김치찌개", "회덮밥"]
+        // var num = Math.floor(Math.random() * 5);
+        var num = parseInt(Math.random() * 5 );
+        console.log(num);
+        function randomMenu() {
+            alert(menu[num]);
+            window.location.reload(true);
+        }
+
+    </script>
+</body>
+</html>

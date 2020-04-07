@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>getEmpList.</title>
+</head>
+<body>
+	<h1>Ajax</h1>
+	<div id="show"></div>
+	<script>
+		var xhtp = new XMLHttpRequest();
+		xhtp.onreadystatechange = function() {
+			//console.log("readystate: " + xhtp.readyState + ", status: " + xhtp.status);
+			if (xhtp.readyState == 4 && xhtp.status == 200) {
+				var parsedData = JSON.parse(xhtp.responseText); //object 타입으로 나온다.
+				console.log(parsedData);
+				showPage(parsedData);
+				
+
+			}
+		}
+		xhtp.open("get", "../GetEmpListServlet");
+		xhtp.send();
+		
+		function showPage(a) {
+			var $tr, $td, $text, $table;
+			
+			$table = document.createElement("table");
+			
+			$table.setAttribute("border", 1);
+			$table.setAttribute("style", "border-collapse: collapse;");
+			
+			var $titles = [ "empId", "first_name", "last_name", "email", "salary"];
+			
+	         $tr = document.createElement("tr");
+	         
+	         for (f in $titles) {
+	            $th = document.createElement("th");
+	             $text = document.createTextNode($titles[f]);
+	             $th.appendChild($text);
+	              $tr.appendChild($th);
+	         }
+	         
+	          $table.appendChild($tr);
+			
+			a.forEach(function (obj) { 
+				$tr = document.createElement("tr");
+				for (f of $titles) {
+					$text = document.createTextNode(obj[f]);
+	                $td = document.createElement("td");
+	                $td.appendChild($text);
+	                $tr.appendChild($td);
+				} $table.appendChild($tr);
+				  document.body.appendChild($table);
+			});
+			
+		}
+		
+		
+		
+	</script>
+</body>
+</html>

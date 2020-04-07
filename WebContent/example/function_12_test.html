@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>function_12_test.html: p155</title>
+    <script>
+        function chColor() {
+            var arrColor = ["#ff0", "#6c0", "#fcf", "#cf0", "#39f"];
+            var arrNum = Math.floor(Math.random() * 5);
+            // var arrNum = Math.random(arrColor.length)*5;
+            console.log(arrNum);
+            console.log(arrColor);
+            console.log (arrColor[arrNum]);
+            var bodyTag = document.getElementById("theBody");
+            bodyTag.style.backgroundColor = arrColor[arrNum];
+        }
+    </script>
+</head>
+<body id="theBody">
+    <button onclick="chColor()">배경 색상 바꾸기</button>
+</body>
+</html>
