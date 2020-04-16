@@ -28,4 +28,11 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/com/yedam/io/chat</name>
+			<type>2</type>
+			<location>Z:/이창호/chat</location>
+		</link>
+	</linkedResources>
 </projectDescription>

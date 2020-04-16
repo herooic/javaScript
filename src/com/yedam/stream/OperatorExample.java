@@ -1,4 +1,4 @@
-package com.yedam.lambda;
+package com.yedam.stream;
 
 import java.util.function.IntBinaryOperator;
 
@@ -12,7 +12,6 @@ class IntBinaryClass implements IntBinaryOperator {
 			return right;
 		}
 	}
-
 }
 
 public class OperatorExample {
